@@ -28,7 +28,7 @@ for w in words:
     unique_words[w][0] += 1
 
 # Sort the items in unique_words by descending order and get the top 20 words
-sorted_top_words = dict(sorted(unique_words.items(), key=lambda item: item[1][0], reverse=True)[:20])
+sorted_top20 = dict(sorted(unique_words.items(), key=lambda item: item[1][0], reverse=True)[:20])
 
 # Initialize the numerator and denominator of the Zipf-Mandelbrot distribution
 numerator, denominator = 0, 0
@@ -55,7 +55,7 @@ print(theoretical_p)
 # Initialize a value to store the total top 20 words
 total_top20 = 0
 # Iterate through all values in the 20 words
-for key, value in sorted_top_words.items():
+for key, value in sorted_top20.items():
     # Compute the total # of occurrences for the top 20 words
     total_top20 += value[0]
 
@@ -72,7 +72,7 @@ chi_squared = 0
 # Initialize a value to iterate through all ranks
 count = 0
 # Iterate through all top 20 words
-for key, value in sorted_top_words.items():
+for key, value in sorted_top20.items():
     # Calculate the chi-squared value:
     # (Observed Value - Expected Value)^2 / Expected Value
     chi_squared += ((value[0] - expected_values[count]) ** 2) / expected_values[count]
