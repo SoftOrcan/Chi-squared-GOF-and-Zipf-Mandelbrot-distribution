@@ -73,9 +73,9 @@ count = 0
 for key, value in sorted_top_words.items():
     # Calculate the chi-squared value:
     # - (Observed Value - Expected Value)^2 / Expected Value
-    chi_squared += ((value[0] - expected_values[count]) ** 2) / expected_values[count]
+    chi_squared += ((value[1] - theoretical_p[count]) ** 2) / theoretical_p[count]
     # Increase the count
     count += 1
 
-# Output: 12576.324183163279
+# Output: 0.47414885323342143
 print(chi_squared)
