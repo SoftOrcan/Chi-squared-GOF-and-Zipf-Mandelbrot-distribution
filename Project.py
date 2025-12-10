@@ -13,8 +13,10 @@ words = []
 for w in cleaned_text.split(" "):
     # Convert the word to lowercase
     w = w.lower()
-    # Append the word to 'words'
-    words.append(w)
+    # If the word is not an empty space,
+    if w:
+        # Append the word to 'words'
+        words.append(w)
 
 # Create a dict to store the # of occurrences of the word and the probability of occurrence
 # Probability of occurrence is calculated as # of occurrences of the word / total # of words
@@ -27,13 +29,6 @@ for w in words:
 
 # Sort the items in unique_words by descending order and get the top 20 words
 sorted_top_words = dict(sorted(unique_words.items(), key=lambda item: item[1][0], reverse=True)[:20])
-
-# Count the total # of words
-total_words = len(words)
-# Iterate through each value in "sorted_top_words"
-for key, value in sorted_top_words.items():
-    # Calculate the probability of the word by dividing # of occurrences of the word / total # of words
-    value[1] = value[0] / total_words
 
 # Initialize the numerator and denominator of the Zipf-Mandelbrot distribution
 numerator, denominator = 0, 0
@@ -57,13 +52,20 @@ for i in range(1, 21):
 # 0.027047990261702702, 0.025674995832174648, 0.02443465786926766, 0.023308636769301408, 0.02228182457682117]
 print(theoretical_p)
 
+# Initialize a value to store the total top 20 words
+total_top20 = 0
+# Iterate through all values in the 20 words
+for key, value in sorted_top_words.items():
+    # Compute the total # of occurrences for the top 20 words
+    total_top20 += value[0]
+
 # Initialize a list to store the expected # of words for each rank
 expected_values = []
 # Iterate through the 20 ranks
 for i in range(20):
     # Calculate the expected # of words for each rank
     # Calculated by multiplying the total # of words by the Zipf-Mandelbrot distribution's probabilities for each rank
-    expected_values.append(total_words * theoretical_p[i])
+    expected_values.append(total_top20 * theoretical_p[i])
 
 # Initialize the chi-squared value as 0
 chi_squared = 0
@@ -77,5 +79,5 @@ for key, value in sorted_top_words.items():
     # Increase the count
     count += 1
 
-# Output: 12576.324183163279
+# Output: 250.03891237497032
 print(chi_squared)
